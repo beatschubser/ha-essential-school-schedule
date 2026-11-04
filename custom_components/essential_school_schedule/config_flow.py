@@ -10,7 +10,7 @@ from homeassistant.util import slugify
 from .const import CONF_NAME, DOMAIN
 
 
-class SleekSchoolScheduleConfigFlow(ConfigFlow, domain=DOMAIN):
+class EssentialSchoolScheduleConfigFlow(ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     async def async_step_user(self, user_input=None):

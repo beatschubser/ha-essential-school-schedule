@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="custom_components/sleek_school_schedule/brand/icon.png" width="128" alt="Sleek School Schedule">
+  <img src="custom_components/essential_school_schedule/brand/icon.png" width="128" alt="Essential School Schedule">
 </p>
 
-<h1 align="center">Sleek School Schedule</h1>
+<h1 align="center">Essential School Schedule</h1>
 
 <p align="center">
   A school timetable for Home Assistant that is easy to set up and looks good on any dashboard.
@@ -10,14 +10,14 @@
 
 <p align="center">
   <a href="https://github.com/hacs/integration"><img src="https://img.shields.io/badge/HACS-Custom-41BDF5.svg" alt="HACS Custom"></a>
-  <a href="https://github.com/beatschubser/ha-sleek-school-schedule/releases"><img src="https://img.shields.io/github/v/release/beatschubser/ha-sleek-school-schedule?include_prereleases" alt="Release"></a>
-  <a href="https://github.com/beatschubser/ha-sleek-school-schedule/actions/workflows/validate.yml"><img src="https://github.com/beatschubser/ha-sleek-school-schedule/actions/workflows/validate.yml/badge.svg" alt="Validate"></a>
+  <a href="https://github.com/beatschubser/ha-essential-school-schedule/releases"><img src="https://img.shields.io/github/v/release/beatschubser/ha-essential-school-schedule?include_prereleases" alt="Release"></a>
+  <a href="https://github.com/beatschubser/ha-essential-school-schedule/actions/workflows/validate.yml"><img src="https://github.com/beatschubser/ha-essential-school-schedule/actions/workflows/validate.yml/badge.svg" alt="Validate"></a>
 </p>
 
 > [!WARNING]
-> **Work in progress.** This integration is under active development and not officially released yet. Features, sensor attributes and settings may still change between versions. Feedback and bug reports are welcome via [issues](https://github.com/beatschubser/ha-sleek-school-schedule/issues).
+> **Work in progress.** This integration is under active development and not officially released yet. Features, sensor attributes and settings may still change between versions. Feedback and bug reports are welcome via [issues](https://github.com/beatschubser/ha-essential-school-schedule/issues).
 
-![Sleek School Schedule on a tablet (light mode) and a phone (dark mode)](assets/hero.png)
+![Essential School Schedule on a tablet (light mode) and a phone (dark mode)](assets/hero.png)
 
 ## Features
 
@@ -46,25 +46,34 @@ I wanted our school timetables in Home Assistant. The existing integrations I tr
 ### HACS (recommended)
 
 1. In HACS, open the menu (three dots, top right) and choose **Custom repositories**.
-2. Add `https://github.com/beatschubser/ha-sleek-school-schedule` with type **Integration**.
-3. Search for **Sleek School Schedule**, install it and restart Home Assistant.
+2. Add `https://github.com/beatschubser/ha-essential-school-schedule` with type **Integration**.
+3. Search for **Essential School Schedule**, install it and restart Home Assistant.
 
 ### Manual
 
-Copy the folder `custom_components/sleek_school_schedule` into the `custom_components` folder of your Home Assistant configuration and restart Home Assistant.
+Copy the folder `custom_components/essential_school_schedule` into the `custom_components` folder of your Home Assistant configuration and restart Home Assistant.
+
+### Coming from Sleek School Schedule
+
+This integration was called Sleek School Schedule before version 3.0.0.
+
+1. Update to version 3.0.0 in HACS (same repository, it was only renamed) and restart Home Assistant.
+2. Add every child again with **exactly the same name**. The timetable is taken over, the old entry is removed and the sensors keep their entity IDs, so automations keep working.
+3. In your dashboards, change the card type from `custom:sleek-school-schedule-card` to `custom:essential-school-schedule-card`.
+4. If the folder `custom_components/sleek_school_schedule` is still there, delete it and restart Home Assistant.
 
 ## Setup
 
-1. **Settings > Devices & services > Add integration > Sleek School Schedule.** Enter the name of the child. Repeat for every child.
-2. **Add the card** to a dashboard: search for "Sleek School Schedule" in the card picker, or use
+1. **Settings > Devices & services > Add integration > Essential School Schedule.** Enter the name of the child. Repeat for every child.
+2. **Add the card** to a dashboard: search for "Essential School Schedule" in the card picker, or use
 
    ```yaml
-   type: custom:sleek-school-schedule-card
+   type: custom:essential-school-schedule-card
    ```
 
 3. **Fill in the timetable:** edit the dashboard, open the card and edit the school days, time grid, subjects and afternoon on the left. Click **Save timetable**.
 
-The card is registered as a dashboard resource automatically. Only if your dashboards run in YAML mode, add `/sleek_school_schedule_files/sleek-school-schedule-card.js` as a JavaScript module resource yourself.
+The card is registered as a dashboard resource automatically. Only if your dashboards run in YAML mode, add `/essential_school_schedule_files/essential-school-schedule-card.js` as a JavaScript module resource yourself.
 
 ### Card options
 
@@ -113,14 +122,14 @@ automation:
 
 ## Reporting problems
 
-Please [open an issue](https://github.com/beatschubser/ha-sleek-school-schedule/issues) and attach the diagnostics: **Settings > Devices & services > Sleek School Schedule**, three dots next to the child, **Download diagnostics**. The file contains the timetable of that child and the current sensor values, nothing else.
+Please [open an issue](https://github.com/beatschubser/ha-essential-school-schedule/issues) and attach the diagnostics: **Settings > Devices & services > Essential School Schedule**, three dots next to the child, **Download diagnostics**. The file contains the timetable of that child and the current sensor values, nothing else.
 
 ## Translations
 
 All texts live in one JSON file per language:
 
-- `custom_components/sleek_school_schedule/frontend/i18n/<language>.json` for the card, the editor and the sensor values
-- `custom_components/sleek_school_schedule/translations/<language>.json` for the setup dialog and sensor names
+- `custom_components/essential_school_schedule/frontend/i18n/<language>.json` for the card, the editor and the sensor values
+- `custom_components/essential_school_schedule/translations/<language>.json` for the setup dialog and sensor names
 
 To add a language, copy the English files, translate them and open a pull request. Corrections to existing translations are very welcome as well.
 

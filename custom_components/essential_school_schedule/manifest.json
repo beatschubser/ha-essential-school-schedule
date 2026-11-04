@@ -1,6 +1,6 @@
 {
-  "domain": "sleek_school_schedule",
-  "name": "Sleek School Schedule",
+  "domain": "essential_school_schedule",
+  "name": "Essential School Schedule",
   "codeowners": [
     "@beatschubser"
   ],
@@ -11,10 +11,10 @@
     "lovelace",
     "websocket_api"
   ],
-  "documentation": "https://github.com/beatschubser/ha-sleek-school-schedule",
+  "documentation": "https://github.com/beatschubser/ha-essential-school-schedule",
   "integration_type": "service",
   "iot_class": "calculated",
-  "issue_tracker": "https://github.com/beatschubser/ha-sleek-school-schedule/issues",
+  "issue_tracker": "https://github.com/beatschubser/ha-essential-school-schedule/issues",
   "requirements": [],
   "version": "2.3.0"
 }

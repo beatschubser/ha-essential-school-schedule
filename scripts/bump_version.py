@@ -10,7 +10,7 @@ import re
 import sys
 from pathlib import Path
 
-BASE = Path(__file__).resolve().parent.parent / "custom_components" / "sleek_school_schedule"
+BASE = Path(__file__).resolve().parent.parent / "custom_components" / "essential_school_schedule"
 SEMVER = re.compile(r"^\d+\.\d+\.\d+(-[0-9A-Za-z.]+)?$")
 
 
@@ -26,7 +26,7 @@ def main() -> None:
 
     for path, pattern, repl in [
         (BASE / "const.py", r'^VERSION = "[^"]+"', f'VERSION = "{version}"'),
-        (BASE / "frontend" / "sleek-school-schedule-card.js", r'^const VERSION = "[^"]+";', f'const VERSION = "{version}";'),
+        (BASE / "frontend" / "essential-school-schedule-card.js", r'^const VERSION = "[^"]+";', f'const VERSION = "{version}";'),
     ]:
         text = path.read_text(encoding="utf-8")
         new, count = re.subn(pattern, repl, text, count=1, flags=re.M)

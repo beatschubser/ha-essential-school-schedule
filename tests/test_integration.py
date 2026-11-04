@@ -14,9 +14,9 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 from homeassistant.util import dt as dt_util
 
-from custom_components.sleek_school_schedule.const import CARD_URL, DOMAIN, STORAGE_KEY, VERSION
-from custom_components.sleek_school_schedule.frontend_resource import _resources
-from custom_components.sleek_school_schedule.store import DATA_STORE
+from custom_components.essential_school_schedule.const import CARD_URL, DOMAIN, STORAGE_KEY, VERSION
+from custom_components.essential_school_schedule.frontend_resource import _resources
+from custom_components.essential_school_schedule.store import DATA_STORE
 
 TZ = "Europe/Berlin"
 
@@ -164,9 +164,9 @@ async def test_card_files_and_resource(hass: HomeAssistant, entry: MockConfigEnt
     assert response.status == 200
     assert response.headers["Cache-Control"] == "no-cache"
     assert f'const VERSION = "{VERSION}"' in await response.text()
-    assert (await client.get("/sleek_school_schedule_files/i18n/de.json")).status == 200
+    assert (await client.get("/essential_school_schedule_files/i18n/de.json")).status == 200
     for path in ("manifest.json", "const.py", "i18n/xx.json"):  # only the card and its language files
-        assert (await client.get(f"/sleek_school_schedule_files/{path}")).status == 404
+        assert (await client.get(f"/essential_school_schedule_files/{path}")).status == 404
 
     resources = _resources(hass)
     assert resources is not None
@@ -182,9 +182,37 @@ async def test_remove_child(hass: HomeAssistant, entry: MockConfigEntry) -> None
 
 
 async def test_diagnostics(hass: HomeAssistant, entry: MockConfigEntry) -> None:
-    from custom_components.sleek_school_schedule.diagnostics import async_get_config_entry_diagnostics
+    from custom_components.essential_school_schedule.diagnostics import async_get_config_entry_diagnostics
 
     diagnostics = await async_get_config_entry_diagnostics(hass, entry)
     assert diagnostics["version"] == VERSION
     assert diagnostics["plan"]["days"]["3"]["s1"] == "Maths"
     assert diagnostics["next_change"] == local("2026-10-15 08:00").isoformat()
+
+
+async def test_take_over_from_sleek_school_schedule(hass: HomeAssistant, hass_storage: dict, freezer) -> None:
+    """A child of the former integration with the same name: timetable and entity IDs are taken over."""
+    await hass.config.async_set_time_zone(TZ)
+    freezer.move_to(local("2026-10-15 07:00"))
+    old = MockConfigEntry(domain="sleek_school_schedule", title="Emma", data={"name": "Emma"}, unique_id="emma")
+    old.add_to_hass(hass)
+    hass_storage["sleek_school_schedule"] = {
+        "version": 1,
+        "key": "sleek_school_schedule",
+        "data": {"plans": {old.entry_id: copy.deepcopy(PLAN)}},
+    }
+    registry = er.async_get(hass)
+    registry.async_get_or_create(
+        "sensor", "sleek_school_schedule", f"{old.entry_id}_next", config_entry=old, suggested_object_id="emma_next_lesson"
+    )
+
+    new = MockConfigEntry(domain=DOMAIN, title="Emma", data={"name": "Emma"}, unique_id="emma")
+    new.add_to_hass(hass)
+    assert await hass.config_entries.async_setup(new.entry_id)
+    await hass.async_block_till_done()
+
+    assert hass.config_entries.async_entries("sleek_school_schedule") == []
+    assert "sleek_school_schedule" not in hass_storage
+    assert hass.data[DATA_STORE].get(new.entry_id)["days"]["3"]["s1"] == "Maths"
+    assert state(hass, new, "next").state == "Maths"
+    assert state(hass, new, "next").entity_id == "sensor.emma_next_lesson"

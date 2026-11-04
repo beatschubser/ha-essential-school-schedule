@@ -13,7 +13,7 @@ from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt as dt_util
 
-from . import SleekConfigEntry
+from . import EssentialConfigEntry
 from .const import DOMAIN, ENTRY_BREAK, ENTRY_FREE, ENTRY_NONE, VERSION
 from .i18n import DATA_STRINGS
 from .logic import Entry, Status, fmt_min
@@ -73,7 +73,7 @@ SENSORS = (
 
 
 async def async_setup_entry(
-    hass: HomeAssistant, entry: SleekConfigEntry, async_add_entities: AddEntitiesCallback
+    hass: HomeAssistant, entry: EssentialConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     async_add_entities(TimetableSensor(entry, description) for description in SENSORS)
 
@@ -85,14 +85,14 @@ class TimetableSensor(SensorEntity):
     _attr_has_entity_name = True
     _attr_should_poll = False
 
-    def __init__(self, entry: SleekConfigEntry, description: TimetableSensorDescription) -> None:
+    def __init__(self, entry: EssentialConfigEntry, description: TimetableSensorDescription) -> None:
         self.entity_description = description
         self._tracker = entry.runtime_data
         self._attr_unique_id = f"{entry.entry_id}_{description.key}"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.entry_id)},
             name=entry.title,
-            manufacturer="Sleek School Schedule",
+            manufacturer="Essential School Schedule",
             model="Timetable",
             sw_version=VERSION,
             entry_type=DeviceEntryType.SERVICE,

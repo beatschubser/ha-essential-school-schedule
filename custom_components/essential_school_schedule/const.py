@@ -1,18 +1,18 @@
-"""Constants for the Sleek School Schedule integration."""
+"""Constants for the Essential School Schedule integration."""
 
-DOMAIN = "sleek_school_schedule"
+DOMAIN = "essential_school_schedule"
 VERSION = "2.3.0"
 
 STORAGE_KEY = DOMAIN
 STORAGE_VERSION = 1
 
-FRONTEND_URL = "/sleek_school_schedule_files"
-CARD_URL = f"{FRONTEND_URL}/sleek-school-schedule-card.js"
+FRONTEND_URL = "/essential_school_schedule_files"
+CARD_URL = f"{FRONTEND_URL}/essential-school-schedule-card.js"
 
 # Dispatcher signals
-SIGNAL_PLAN_UPDATED = "sleek_school_schedule_plan_updated_{}"  # one timetable was saved (format with entry_id)
-SIGNAL_CHANGED = "sleek_school_schedule_changed"  # any timetable or child changed (for the cards)
-SIGNAL_REFRESH = "sleek_school_schedule_refresh"  # language or time zone of Home Assistant changed
+SIGNAL_PLAN_UPDATED = "essential_school_schedule_plan_updated_{}"  # one timetable was saved (format with entry_id)
+SIGNAL_CHANGED = "essential_school_schedule_changed"  # any timetable or child changed (for the cards)
+SIGNAL_REFRESH = "essential_school_schedule_refresh"  # language or time zone of Home Assistant changed
 
 CONF_NAME = "name"
 

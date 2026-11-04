@@ -11,6 +11,7 @@ from homeassistant.components.http import HomeAssistantView
 from homeassistant.core import HomeAssistant
 
 from .const import CARD_URL, FRONTEND_URL, VERSION
+from .migrate import async_remove_old_resource
 
 _LOGGER = logging.getLogger(__name__)
 FOLDER = Path(__file__).parent / "frontend"
@@ -25,7 +26,7 @@ class FrontendView(HomeAssistantView):
     """
 
     url = FRONTEND_URL + "/{path:.+}"
-    name = "sleek_school_schedule:frontend"
+    name = "essential_school_schedule:frontend"
     requires_auth = False  # loaded by the browser as a module, like /local files
 
     def __init__(self, files: dict[str, Path]) -> None:
@@ -40,7 +41,7 @@ class FrontendView(HomeAssistantView):
 
 def _list_files() -> dict[str, Path]:
     """Only these files are served (no directory access)."""
-    files = [FOLDER / "sleek-school-schedule-card.js", *sorted((FOLDER / "i18n").glob("*.json"))]
+    files = [FOLDER / "essential-school-schedule-card.js", *sorted((FOLDER / "i18n").glob("*.json"))]
     return {f.relative_to(FOLDER).as_posix(): f for f in files}
 
 
@@ -80,6 +81,7 @@ async def async_register_card(hass: HomeAssistant) -> None:
         resources = _resources(hass)
         if resources is not None:
             await _async_loaded(resources)
+            await async_remove_old_resource(resources)
             item = next((i for i in resources.async_items() if _is_card(i)), None)
             if item is None:
                 await resources.async_create_item({"res_type": "module", "url": url})

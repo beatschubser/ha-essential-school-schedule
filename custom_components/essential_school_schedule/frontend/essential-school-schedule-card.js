@@ -1,8 +1,8 @@
-/* Sleek School Schedule card for Home Assistant (loaded automatically by the integration).
+/* Essential School Schedule card for Home Assistant (loaded automatically by the integration).
  *
- * - SleekSchoolScheduleCard shows the timetable. It only displays; the data comes from the
+ * - EssentialSchoolScheduleCard shows the timetable. It only displays; the data comes from the
  *   integration via WebSocket and is updated live when a timetable is saved anywhere.
- * - SleekSchoolScheduleCardEditor is the visual editor (edit dashboard > open card): card options
+ * - EssentialSchoolScheduleCardEditor is the visual editor (edit dashboard > open card): card options
  *   plus the timetable itself, which is saved directly with its own button.
  *
  * Texts: frontend/i18n/<language>.json, English is the fallback for missing keys.
@@ -10,8 +10,8 @@
  */
 
 const VERSION = "2.3.0";
-const WS = "sleek_school_schedule";
-const I18N_URL = "/sleek_school_schedule_files/i18n/";
+const WS = "essential_school_schedule";
+const I18N_URL = "/essential_school_schedule_files/i18n/";
 const LANGUAGES = ["en", "de", "fr", "nl", "es", "it", "pl"];
 const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6];
 const DEFAULT_SCHOOL_DAYS = [0, 1, 2, 3, 4];
@@ -64,7 +64,7 @@ const loadStrings = (lang) =>
     return lang === "en" ? english : deepMerge(english, await fetchLanguage(lang));
   })().catch((e) => {
     delete i18nCache[lang];
-    console.warn("sleek-school-schedule-card: translations could not be loaded", e);
+    console.warn("essential-school-schedule-card: translations could not be loaded", e);
     return {};
   }));
 
@@ -226,7 +226,7 @@ const checkVersion = async (hass) => {
  * Card (display only)
  * ===================================================================== */
 
-class SleekSchoolScheduleCard extends HTMLElement {
+class EssentialSchoolScheduleCard extends HTMLElement {
   constructor() {
     super();
     // The styles are added once; every render only replaces the content of ha-card
@@ -241,7 +241,7 @@ class SleekSchoolScheduleCard extends HTMLElement {
   }
 
   static getConfigElement() {
-    return document.createElement("sleek-school-schedule-card-editor");
+    return document.createElement("essential-school-schedule-card-editor");
   }
 
   static getStubConfig() {
@@ -504,7 +504,7 @@ class SleekSchoolScheduleCard extends HTMLElement {
  * Card editor (left side of the edit dialog)
  * ===================================================================== */
 
-class SleekSchoolScheduleCardEditor extends HTMLElement {
+class EssentialSchoolScheduleCardEditor extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" }).innerHTML = `<style>${BASE_STYLE}${EDIT_STYLE}</style><div class="wrap"></div>`;
@@ -597,7 +597,7 @@ class SleekSchoolScheduleCardEditor extends HTMLElement {
     const config = { ...this._config };
     if (value && !(key === "appearance" && value === "auto")) config[key] = value;
     else delete config[key];
-    config.type ||= "custom:sleek-school-schedule-card";
+    config.type ||= "custom:essential-school-schedule-card";
     this._config = config;
     this.dispatchEvent(new CustomEvent("config-changed", { detail: { config }, bubbles: true, composed: true }));
   }
@@ -1047,16 +1047,16 @@ button.x:hover { color:var(--error-color, #db4437); }
  * Registration
  * ===================================================================== */
 
-if (!customElements.get("sleek-school-schedule-card-editor"))
-  customElements.define("sleek-school-schedule-card-editor", SleekSchoolScheduleCardEditor);
-if (!customElements.get("sleek-school-schedule-card")) {
-  customElements.define("sleek-school-schedule-card", SleekSchoolScheduleCard);
+if (!customElements.get("essential-school-schedule-card-editor"))
+  customElements.define("essential-school-schedule-card-editor", EssentialSchoolScheduleCardEditor);
+if (!customElements.get("essential-school-schedule-card")) {
+  customElements.define("essential-school-schedule-card", EssentialSchoolScheduleCard);
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: "sleek-school-schedule-card",
-    name: "Sleek School Schedule",
+    type: "essential-school-schedule-card",
+    name: "Essential School Schedule",
     description: "Timetable with the current lesson highlighted",
     preview: false,
   });
-  console.info("%c SLEEK-SCHOOL-SCHEDULE-CARD %c " + VERSION + " ", "background:#03a9f4;color:#fff", "");
+  console.info("%c ESSENTIAL-SCHOOL-SCHEDULE-CARD %c " + VERSION + " ", "background:#03a9f4;color:#fff", "");
 }

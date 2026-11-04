@@ -8,12 +8,12 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 from homeassistant.util import dt as dt_util
 
-from . import SleekConfigEntry
+from . import EssentialConfigEntry
 from .const import VERSION
 from .logic import next_change
 
 
-async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: SleekConfigEntry) -> dict[str, Any]:
+async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: EssentialConfigEntry) -> dict[str, Any]:
     tracker = entry.runtime_data
     now = dt_util.now()
     return {

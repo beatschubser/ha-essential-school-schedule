@@ -5,14 +5,14 @@ Usage: python3 scripts/release_notes.py <git range, e.g. v2.2.0..HEAD or HEAD>
 
 Every commit becomes a bullet with its subject line. Lines of the commit message
 that start with "- " are added as sub-bullets, so one commit can describe several
-changes. Version commits ("Sleek School Schedule 2.1.0") are left out.
+changes. Version commits ("Essential School Schedule 2.1.0") are left out.
 """
 
 import re
 import subprocess
 import sys
 
-VERSION_COMMIT = re.compile(r"^Sleek School Schedule \d")
+VERSION_COMMIT = re.compile(r"^(Essential|Sleek) School Schedule \d")  # named Sleek School Schedule before 3.0.0
 
 
 def main() -> None:

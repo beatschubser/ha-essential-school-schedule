@@ -1,4 +1,4 @@
-"""Sleek School Schedule: school timetables with a dashboard card and sensors.
+"""Essential School Schedule: school timetables with a dashboard card and sensors.
 
 Setup overview:
 - async_setup (once): load plans and texts, register WebSocket commands,
@@ -16,7 +16,7 @@ from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.helpers.start import async_at_started
 from homeassistant.helpers.typing import ConfigType
 
-from . import frontend_resource, websocket_api
+from . import frontend_resource, migrate, websocket_api
 from .const import DOMAIN, SIGNAL_CHANGED, SIGNAL_REFRESH
 from .i18n import async_load_strings
 from .store import DATA_STORE, PlanStore
@@ -25,7 +25,7 @@ from .tracker import ScheduleTracker
 PLATFORMS = [Platform.SENSOR]
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
-type SleekConfigEntry = ConfigEntry[ScheduleTracker]
+type EssentialConfigEntry = ConfigEntry[ScheduleTracker]
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
@@ -48,7 +48,8 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: SleekConfigEntry) -> bool:
+async def async_setup_entry(hass: HomeAssistant, entry: EssentialConfigEntry) -> bool:
+    await migrate.async_take_over(hass, entry, hass.data[DATA_STORE])  # child of the former Sleek School Schedule
     tracker = ScheduleTracker(hass, hass.data[DATA_STORE], entry.entry_id)
     tracker.async_start()
     entry.runtime_data = tracker
@@ -60,7 +61,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: SleekConfigEntry) -> boo
     return True
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: SleekConfigEntry) -> bool:
+async def async_unload_entry(hass: HomeAssistant, entry: EssentialConfigEntry) -> bool:
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 

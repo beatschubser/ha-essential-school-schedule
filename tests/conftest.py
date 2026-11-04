@@ -14,5 +14,5 @@ else:
 
     @pytest.fixture(autouse=True)
     def auto_enable_custom_integrations(enable_custom_integrations):
-        """Allow Home Assistant to load custom_components/sleek_school_schedule in every test."""
+        """Allow Home Assistant to load custom_components/essential_school_schedule in every test."""
         yield

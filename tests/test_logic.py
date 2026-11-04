@@ -10,7 +10,7 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-BASE = Path(__file__).resolve().parent.parent / "custom_components" / "sleek_school_schedule"
+BASE = Path(__file__).resolve().parent.parent / "custom_components" / "essential_school_schedule"
 
 # Load const.py and logic.py as a package without importing Home Assistant
 # (pytest also runs tests/test_*.py with Home Assistant, see tests/conftest.py)
