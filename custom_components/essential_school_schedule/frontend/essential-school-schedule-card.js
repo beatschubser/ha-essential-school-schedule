@@ -9,7 +9,7 @@
  * Weekdays are numbered like in the integration: 0 = Monday ... 6 = Sunday.
  */
 
-const VERSION = "3.0.0-beta.1";
+const VERSION = "3.0.0";
 const WS = "essential_school_schedule";
 const I18N_URL = "/essential_school_schedule_files/i18n/";
 const LANGUAGES = ["en", "de", "fr", "nl", "es", "it", "pl"];
