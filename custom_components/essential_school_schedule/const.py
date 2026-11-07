@@ -3,7 +3,7 @@
 DOMAIN = "essential_school_schedule"
 VERSION = "3.0.0"
 
-STORAGE_KEY = DOMAIN
+STORAGE_KEY = f"{DOMAIN}.json"  # file name in .storage
 STORAGE_VERSION = 1
 
 FRONTEND_URL = "/essential_school_schedule_files"

@@ -1,4 +1,4 @@
-"""Storage of all timetables in .storage/essential_school_schedule, keyed by config entry id."""
+"""Storage of all timetables in .storage/essential_school_schedule.json, keyed by config entry id."""
 
 from __future__ import annotations
 
