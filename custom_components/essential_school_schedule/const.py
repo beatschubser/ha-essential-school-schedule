@@ -1,7 +1,7 @@
 """Constants for the Essential School Schedule integration."""
 
 DOMAIN = "essential_school_schedule"
-VERSION = "3.0.0"
+VERSION = "3.0.1-beta.1"
 
 STORAGE_KEY = f"{DOMAIN}.json"  # file name in .storage
 STORAGE_VERSION = 1
